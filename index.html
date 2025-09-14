@@ -1,275 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BluShell - Ocean Hazard Reporting</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BluShell - Ocean Hazard Reporting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="images/logo.png" type="image/png">
 
-<style>
-/* Body & Text */
-body { 
-    font-family: 'Poppins', sans-serif; 
-    background: #ffffff; 
-    color: #000000; /* default text color black */
-}
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #F8F9FA;
+            color: #212529;
+        }
 
-/* Navbar */
-nav {
-    background-color: #00bfff ; /* blue */
-    color: #E0F2FE  ; /* text white */
-}
+        nav {
+            background-color: #256D85;
+            color: #FFFFFF;
+            padding: 0.7rem 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
 
-/* Navbar links hover */
-.glow-hover:hover { 
-    text-shadow: 0 0 8px #00D8FF, 0 0 16px #00D8FF; 
-    transition: 0.3s; 
-}
+        nav .nav-title {
+            font-size: 1.3rem;
+        }
 
-/* Map container */
-.map-container { 
-    height: 500px; 
-    width: 100%; 
-    border-radius: 12px; 
-    overflow: hidden; 
-    margin-bottom: 1rem; 
-    box-shadow: 0 0 20px rgba(0, 216, 255, 0.3); 
-}
+        nav ul li a {
+            font-size: 0.99rem;
+            color: #E0F7FA;
+            transition: none;
+        }
 
-/* Leaflet popup styling */
-.leaflet-popup-content-wrapper { 
-    background: rgba(255,255,255,0.9); /* light popup */
-    color: #000000; /* black text inside popup */
-    border-radius: 12px; 
-    backdrop-filter: blur(5px); 
-    box-shadow: 0 0 15px rgba(0,216,255,0.3); 
-}
+        nav ul li a:hover {
+            color: #00B4D8;
+        }
 
-/* Scroll container */
-.scroll-container { 
-    display: flex; 
-    overflow-x: auto; 
-    gap: 1rem; 
-    padding-bottom: 1rem; 
-    scroll-behavior: smooth; 
-}
-.scroll-container::-webkit-scrollbar { height: 6px; }
-.scroll-container::-webkit-scrollbar-thumb { background-color: #00D8FF; border-radius: 3px; }
+        .map-container {
+            height: 500px;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 0 20px rgba(0, 180, 216, 0.3);
+            position: relative;
+        }
 
-/* Cards */
-.card { 
-    min-width: 250px; 
-    background: #f9f9f9; /* white/light card */
-    color: #000000; /* black text */
-    border-radius: 12px; 
-    padding: 1rem; 
-    flex-shrink: 0; 
-    transition: transform 0.3s, box-shadow 0.3s; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 0.5rem; 
-}
-.card:hover { 
-    transform: translateY(-5px); 
-    box-shadow: 0 0 15px #00D8FF; 
-}
-.card img, .card video { 
-    width: 100%; 
-    height: 140px; 
-    object-fit: cover; 
-    border-radius: 8px; 
-    background: #e0e0e0; /* light gray placeholder */
-}
-.card-caption { margin-top: 0.5rem; }
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: visible;
+            gap: 0.5rem;
+            padding: 0.25rem 0;
+            scroll-behavior: smooth;
+        }
 
-/* Buttons */
-.button-sleek { 
-    padding: 0.5rem 1rem; 
-    border-radius: 9999px; 
-    font-semibold; 
-    transition: 0.3s; 
-    cursor: pointer; 
-}
-.button-edit { 
-    background: linear-gradient(90deg,#00D8FF,#0077b6); 
-    color: white; 
-}
-.button-edit:hover { 
-    background: linear-gradient(90deg,#0077b6,#00D8FF); 
-}
-.button-delete { 
-    background: linear-gradient(90deg,#e74c3c,#c0392b); 
-    color: white; 
-}
-.button-delete:hover { 
-    background: linear-gradient(90deg,#c0392b,#e74c3c); 
-}
+        .scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
 
-/* Marker Pin */
-.custom-marker { 
-    font-size: 28px; 
-    transform: translateY(-8px); 
-}
-</style>
+        .scroll-container::-webkit-scrollbar-thumb {
+            background-color: #00B4D8;
+            border-radius: 3px;
+        }
 
+        .card {
+            min-width: 230px;
+            background: #FFFFFF;
+            color: #212529;
+            border-radius: 12px;
+            padding: 0.8rem;
+            flex-shrink: 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            margin-top: 0.25rem;
+            margin-bottom: 0.25rem;
+            box-shadow: 0 2px 8px rgba(0, 180, 216, 0.20);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 180, 216, 0.30);
+        }
+
+        .card img,
+        .card video {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #e0e0e0;
+        }
+
+        .card-caption {
+            margin-top: 0.3rem;
+        }
+
+        .card-caption p:first-child {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
+            color: #212529;
+        }
+
+        .button-sleek {
+            padding: 0.4rem 0.8rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: 0.3s;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .button-edit {
+            background: linear-gradient(90deg, #00B4D8, #256D85);
+            color: white;
+        }
+
+        .button-edit:hover {
+            background: linear-gradient(90deg, #256D85, #00B4D8);
+        }
+
+        .button-delete {
+            background: linear-gradient(90deg, #E63946, #B00020);
+            color: white;
+        }
+
+        .button-delete:hover {
+            background: linear-gradient(90deg, #B00020, #E63946);
+        }
+
+        .custom-marker {
+            font-size: 28px;
+            transform: translateY(-8px);
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #212529;
+        }
+
+        .leaflet-popup-content-wrapper {
+            background: rgba(255, 255, 255, 0.95);
+            color: #212529;
+            border-radius: 8px;
+            backdrop-filter: blur(3px);
+            box-shadow: 0 0 8px rgba(0, 180, 216, 0.3);
+            font-size: 0.85rem;
+            padding: 0.4rem 0.6rem;
+        }
+    </style>
 </head>
+
 <body class="overflow-x-hidden">
 
-<nav class="px-6 py-4 flex justify-between items-center sticky top-0 z-50 shadow-lg">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center shadow-lg">
+        <div class="flex items-center gap-3">
+            <img src="images/logo.png" alt="BluShell Logo" class="h-10 w-auto"/>
+            <span class="nav-title font-bold">BluShell</span>
+        </div>
+        <ul class="flex gap-4 font-medium">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="create_post.html">Create Post</a></li>
+            <li><a href="login.html">Register/Login</a></li>
+            <li><a href="index.html">Sign Out</a></li>
+        </ul>
+    </nav>
 
-    <div class="flex items-center gap-3">
-        <span class="text-2xl font-bold glow-hover">BluShell</span>
-    </div>
-    <ul class="flex gap-6 font-medium text-lg">
-        <li class="glow-hover cursor-pointer"><a href="index.html">Home</a></li>
-        <li class="glow-hover cursor-pointer"><a href="about.html">About Us</a></li>
-        <li class="glow-hover cursor-pointer"><a href="login.html">Register/Login</a></li>
-        <li class="glow-hover cursor-pointer"><a href="create_post.html">Create Post</a></li>
-        <li class="glow-hover cursor-pointer"><a href="index.html">Sign Out</a></li>
-    </ul>
-</nav>
+    <!-- Map -->
+    <section class="px-6 mt-3">
+        <div class="map-container" id="map"></div>
+    </section>
 
-<!-- Interactive Map -->
-<section class="px-6 mt-8">
-    <h2 class="text-3xl font-bold mb-4 glow-hover text-center">Real Time Ocean Hazard Dashboard</h2>
-    <div id="map" class="map-container"></div>
-</section>
+    <!-- Recent Reports -->
+    <section class="px-6 mt-6">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-3xl font-bold glow-hover">All Posts</h2>
+            <a href="all_posts.html" title="View All Posts" class="text-[#256D85] hover:text-[#00B4D8] text-2xl">
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+        <div class="scroll-container" id="recentReports"></div>
+    </section>
 
-<!-- Recent Reports -->
-<section class="px-6 mt-6">
-    <h2 class="text-3xl font-bold mb-4 glow-hover">All Posts</h2>
-    <div class="scroll-container" id="recentReports"></div>
-</section>
+    <!-- My Reports -->
+    <section class="px-6 mt-6">
+        <h2 class="text-3xl font-bold mb-4 glow-hover">My Posts</h2>
+        <div class="scroll-container" id="myReports"></div>
+    </section>
 
-<!-- My Reports -->
-<section class="px-6 mt-6">
-    <h2 class="text-3xl font-bold mb-4 glow-hover">My Posts</h2>
-    <div class="scroll-container" id="myReports"></div>
-</section>
+    <!-- Social Media Section -->
+    <section class="px-6 mt-6">
+        <h2 class="text-3xl font-bold mb-4 glow-hover">Social Media Posts</h2>
+        <div class="scroll-container" id="socialMediaPosts"></div>
+    </section>
 
+ 
 <!-- Footer -->
-<footer class="bg-[#001f3f] text-white mt-12">
-    <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div>
-            <h3 class="text-xl font-bold mb-4">Quick Links</h3>
-            <ul class="space-y-2">
-                <li><a href="#" class="hover:text-[#00D8FF] transition">Home</a></li>
-                <li><a href="#" class="hover:text-[#00D8FF] transition">About</a></li>
-                <li><a href="#" class="hover:text-[#00D8FF] transition">Contact</a></li>
-                <li><a href="#" class="hover:text-[#00D8FF] transition">FAQ</a></li>
-            </ul>
-        </div>
-        <div>
-            <h3 class="text-xl font-bold mb-4">Contact Info</h3>
-            <p>Email: <a href="mailto:info@blushell.com" class="hover:text-[#00D8FF] transition">info@blushell.com</a></p>
-            <p>Phone: <a href="tel:+911234567890" class="hover:text-[#00D8FF] transition">+91 12345 67890</a></p>
-            <p>Address: 123 Ocean Drive, Coastal City, India</p>
-        </div>
-        <div>
-            <h3 class="text-xl font-bold mb-4">Follow Us</h3>
-            <div class="flex gap-4 text-2xl">
-                <a href="#" class="hover:text-[#00D8FF] transition"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="hover:text-[#00D8FF] transition"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="hover:text-[#00D8FF] transition"><i class="fab fa-youtube"></i></a>
-                <a href="#" class="hover:text-[#00D8FF] transition"><i class="fab fa-facebook"></i></a>
+<footer class="bg-[#22677a] text-white py-6">
+    <div class="container mx-auto px-10 max-w-7xl">
+        <div class="grid grid-cols-4 gap-6 text-left">
+
+            <!-- BluShell Info -->
+            <div class="flex flex-col items-start justify-center">
+                <h3 class="text-lg font-semibold mb-5">BluShell</h3>
+                <p class="text-sm leading-snug">Crowdsourced ocean hazard reporting platform for coastal safety and disaster management.</p>
+                <p class="mt-5 text-xs leading-snug">Powered by INCOIS</p>
             </div>
+
+            <!-- Quick Links -->
+            <div class="flex flex-col items-start justify-center">
+                <h3 class="text-lg font-semibold mb-1">Quick Links</h3>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="#" class="hover:text-[#00B4D8] transition">Home</a></li>
+                    <li><a href="#" class="hover:text-[#00B4D8] transition">About Us</a></li>
+                    <li><a href="#" class="hover:text-[#00B4D8] transition">All Reports</a></li>
+                    <li><a href="#" class="hover:text-[#00B4D8] transition">Submit Report</a></li>
+                    <li><a href="#" class="hover:text-[#00B4D8] transition">Emergency Contacts</a></li>
+                    <li><a href="#" class="hover:text-[#00B4D8] transition">FAQ</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="flex flex-col items-start justify-center">
+                <h3 class="text-lg font-semibold mb-1">Contact Info</h3>
+                <p class="text-sm leading-snug">info@blushell.com</p>
+                <p class="text-sm leading-snug">+91 12345 67890</p>
+                <p class="text-sm leading-snug">INCOIS, Pragathi Nagar, Hyderabad - 500090</p>
+            </div>
+
+            <!-- Emergency Helpline -->
+            <div class="flex justify-center items-center">
+                <div class="bg-[#195864] p-3 rounded-lg text-center w-full">
+                    <p class="font-semibold text-lg mb-1">Emergency Helpline</p>
+                    <p class="text-2xl font-bold mb-1">1093</p>
+                    <p class="text-sm">24/7 Disaster Management</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="border-t border-gray-400 mt-4 pt-2 text-center text-xs leading-tight">
+            <p class="mb-1">© 2025 BluShell. All rights reserved. | Privacy Policy | Terms of Service | Data Protection</p>
+            <p>Made with <span class="text-red-500">❤</span> for coastal safety</p>
         </div>
     </div>
-    <div class="text-center py-4 border-t border-gray-600 mt-6">&copy; 2025 BluShell. All rights reserved.</div>
 </footer>
 
-<script>
-const map = L.map('map').setView([20.5937, 78.9629], 5);
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and others',
-    maxZoom: 19
-}).addTo(map);
 
-// Coastline
-const coastlinePoints = [
-    [23.7, 68.1],[22.0, 69.4],[20.0, 70.3],[18.9, 72.2],[17.7, 73.0],
-    [15.5, 73.8],[13.9, 74.4],[12.9, 74.8],[11.8, 75.4],[10.8, 75.8],
-    [9.8, 76.3],[8.3, 77.0],[7.9, 77.5],[8.1, 77.6],[8.0, 77.6],
-    [7.5, 77.8],[7.0, 77.9],[6.8, 78.2],[6.9, 79.0],[7.2, 79.8],
-    [7.9, 80.3],[8.5, 80.8],[9.2, 81.3],[9.9, 81.5],[10.5, 81.7],
-    [11.0, 82.0],[11.4, 82.3],[12.0, 82.5],[12.3, 82.9],[12.8, 83.0]
-];
-L.polyline(coastlinePoints,{color:'#3498db',weight:3,opacity:0.8}).addTo(map).bindPopup('Indian Coastline');
 
-// Severity and Hazard Types
-const severityLevels = {
-    1: {color: '#2ecc71', name: 'Low'},
-    2: {color: '#f39c12', name: 'Moderate'},
-    3: {color: '#e74c3c', name: 'High'},
-    4: {color: '#8e44ad', name: 'Severe'}
-};
-const hazardTypes = {
-    flooding: {icon: 'fa-water', name: 'Coastal Flooding', image: 'images/flooding.jpg'},
-    erosion: {icon: 'fa-hill-rockslide', name: 'Beach Erosion', image: 'images/erosion.jpg'},
-    cyclone: {icon: 'fa-wind', name: 'Cyclone Damage', image: 'images/cyclone.jpg'},
-    pollution: {icon: 'fa-trash', name: 'Pollution', image: 'images/pollution.jpg'},
-    boat: {icon: 'fa-trash', name: 'Boat', image: 'images/boat.jpg'},
-    Tsunami: {icon: 'fa-tree', name: 'Tsunami', image: 'images/tsunami.jpg'},
-    high_tide: {icon: 'fa-trash', name: 'High Tide', image: 'images/high.jpg'},
-    currents: {icon: 'fa-trash', name: 'High ocean currents', image: 'images/currents.jpg'},
-    other: {icon: 'fa-triangle-exclamation', name: 'Other Hazard', image: 'images/other.jpg'}
-};
 
-// Dummy reports data
-const loggedInUser = 'Sanjana Prasad';
-const reports = [
-    {lat: 19.0760, lng: 72.8777, severity: 3, type: 'erosion', desc: 'Mumbai coast erosion', user: 'Sanjana Prasad', media: []},
-    {lat: 13.0827, lng: 80.2707, severity: 4, type: 'pollution', desc: 'Plastic Pollution', user: 'Ishanya Tripathi', media: []},
-    {lat: 17.686815, lng: 83.218483, severity: 4, type: 'boat', desc: 'Boat Accident', user: 'Mihir Sahui', media: []},
-    {lat: 22.5726, lng: 88.3639, severity: 2, type: 'flooding', desc: 'Kolkata flooding', user: 'Sanjana Prasad', media: []},
-    {lat: 15.2993, lng: 74.1240, severity: 1, type: 'Tsunami', desc: 'Tsunami', user: 'Naman Sinha', media: []},
-    {lat: 20.905886, lng: 70.387505, severity: 1, type: 'high_tide', desc: 'High Tides', user: 'Amit Gupta', media: []},
-    {lat: 11.127123, lng: 78.656891, severity: 1, type: 'currents', desc: 'High ocean currents', user: 'Aarya Nighut', media: []},
-];
+    <script>
+        const map = L.map('map').setView([20.5937, 78.9629], 5);
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and others',
+            maxZoom: 19
+        }).addTo(map);
 
-// Loop through reports and add markers, cards, and media
-reports.forEach(r => {
-    const sev = severityLevels[r.severity];
-    const type = hazardTypes[r.type];
-    const marker = L.marker([r.lat, r.lng], {icon: L.divIcon({className: 'custom-marker', html: `<div style="color:${sev.color}">📍</div>`, iconSize: [24, 24], iconAnchor: [12, 24]})}).addTo(map)
-        .bindPopup(`<h3 style="color:${sev.color}">${type.name}</h3><p>${r.desc}</p>`);
+        const loggedInUser = 'Sanjana Prasad';
 
-    const card = document.createElement('div');
-    card.className = 'card';
-    
-    // Add specific hazard type image
-    const mediaHtml = `<img src="${type.image}">`;
+        const severityLevels = {
+            1: { color: '#2ECC71', name: 'Low' },
+            2: { color: '#FFC107', name: 'Moderate' },
+            3: { color: '#E63946', name: 'High' },
+            4: { color: '#6A4C93', name: 'Severe' }
+        };
 
-    card.innerHTML = `
-        ${mediaHtml}
-        <div class="card-caption">
-            <p class="font-bold text-lg">${type.name}</p>
-            <p>${r.desc}</p>
-            <p><strong>User:</strong> ${r.user}</p>
-        </div>
-    `;
-    
-    // Add buttons for "My Reports"
-    if (r.user === loggedInUser) {
-        card.innerHTML += `
-            <div class="mt-2 flex gap-2">
-                <button class="button-sleek button-edit">Edit</button>
-                <button class="button-sleek button-delete">Delete</button>
-            </div>
-        `;
-        document.getElementById('myReports').appendChild(card);
-    } else {
-        document.getElementById('recentReports').appendChild(card);
-    }
+        const hazardTypes = {
+            flooding: { icon: 'fa-water', name: 'Coastal Flooding', image: 'images/flooding.jpg' },
+            erosion: { icon: 'fa-hill-rockslide', name: 'Beach Erosion', image: 'images/erosion.jpg' },
+            cyclone: { icon: 'fa-wind', name: 'Cyclone Damage', image: 'images/cyclone.jpg' },
+            pollution: { icon: 'fa-trash', name: 'Pollution', image: 'images/pollution.jpg' },
+            boat: { icon: 'fa-trash', name: 'Boat', image: 'images/boat.jpg' },
+            Tsunami: { icon: 'fa-tree', name: 'Tsunami', image: 'images/tsunami.jpg' },
+            high_tide: { icon: 'fa-trash', name: 'High Tide', image: 'images/high.jpg' },
+            currents: { icon: 'fa-trash', name: 'High ocean currents', image: 'images/currents.jpg' },
+            other: { icon: 'fa-triangle-exclamation', name: 'Other Hazard', image: 'images/other.jpg' }
+        };
 
-    // Open/close popups on card hover
-    card.addEventListener('mouseenter', () => marker.openPopup());
-    card.addEventListener('mouseleave', () => marker.closePopup());
-});
-</script>
+        const reports = [
+            { lat: 19.0760, lng: 72.8777, severity: 3, type: 'erosion', desc: 'Mumbai coast erosion', user: 'Sanjana Prasad', media: [] },
+            { lat: 13.0827, lng: 80.2707, severity: 4, type: 'pollution', desc: 'Plastic Pollution', user: 'Ishanya Tripathi', media: [] },
+            { lat: 17.686815, lng: 83.218483, severity: 4, type: 'boat', desc: 'Boat Accident', user: 'Mihir Sahu', media: [] },
+            { lat: 22.5726, lng: 88.3639, severity: 2, type: 'flooding', desc: 'Kolkata flooding', user: 'Sanjana Prasad', media: [] },
+            { lat: 15.2993, lng: 74.1240, severity: 1, type: 'Tsunami', desc: 'Tsunami', user: 'Naman Sinha', media: [] },
+            { lat: 20.905886, lng: 70.387505, severity: 1, type: 'high_tide', desc: 'High Tides', user: 'Amit Gupta', media: [] },
+            { lat: 11.127123, lng: 78.656891, severity: 1, type: 'currents', desc: 'High ocean currents', user: 'Aarya Nighut', media: [] }
+        ];
+
+        reports.forEach(r => {
+            const sev = severityLevels[r.severity];
+            const type = hazardTypes[r.type];
+
+            const marker = L.marker([r.lat, r.lng], {
+                icon: L.divIcon({
+                    className: 'custom-marker',
+                    html: `<div style="width:16px; height:16px; background-color:#FF0000; border-radius:50%; border:2px solid #333;"></div>`,
+                    iconSize: [16, 16],
+                    iconAnchor: [8, 8]
+                })
+            }).addTo(map).bindPopup(`<strong>${type.name}</strong><br>${r.desc}`);
+
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <img src="${type.image}">
+                <div class="card-caption">
+                    <p>${type.name}</p>
+                    <p>${r.desc}</p>
+                    <p><strong>User:</strong> ${r.user}</p>
+                </div>
+            `;
+
+            if (r.user === loggedInUser) {
+                card.innerHTML += `
+                    <div class="mt-1 flex gap-1">
+                        <button class="button-sleek button-edit">Edit</button>
+                        <button class="button-sleek button-delete">Delete</button>
+                    </div>
+                `;
+
+                card.querySelector('.button-delete').addEventListener('click', () => {
+                    card.remove();
+                    map.removeLayer(marker);
+                });
+
+                document.getElementById('myReports').appendChild(card);
+            } else {
+                document.getElementById('recentReports').appendChild(card);
+            }
+
+            card.addEventListener('mouseenter', () => marker.openPopup());
+            card.addEventListener('mouseleave', () => marker.closePopup());
+        });
+
+        const socialMediaData = [
+            { platform: 'Instagram', caption: 'Oil Spill', type: 'social', lat: 16.440588, lng: 73.340281, user: 'coastlover123', media: 'images/social1.jpg' },
+            { platform: 'Twitter', caption: 'Algae', type: 'social', lat: 10.03442, lng: 76.05398, user: 'eco_warrior', media: 'images/social2.jpg' },
+            { platform: 'Facebook', caption: 'Marine Debris', type: 'social', lat: 18.52293, lng: 84.36001, user: 'localreporter', media: 'images/social3.jpg' }
+        ];
+
+        socialMediaData.forEach(post => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <img src="${post.media}" alt="Social Post Media">
+                <div class="card-caption">
+                    <p><strong>${post.platform}</strong></p>
+                    <p>${post.caption}</p>
+                    <p><strong>User:</strong> ${post.user}</p>
+                </div>
+            `;
+
+            document.getElementById('socialMediaPosts').appendChild(card);
+
+            L.marker([post.lat || 20.5937, post.lng || 78.9629], {
+                icon: L.divIcon({
+                    className: 'custom-marker',
+                    html: `<div style="width:16px; height:16px; background-color:#FFD700; border-radius:50%; border:2px solid #333;"></div>`,
+                    iconSize: [16, 16],
+                    iconAnchor: [8, 8]
+                })
+            }).addTo(map).bindPopup(`<strong>${post.platform}</strong><br>${post.caption}`);
+        });
+    </script>
 
 </body>
 </html>
