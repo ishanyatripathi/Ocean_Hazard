@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Create Hazard Report - BluShell</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f2027;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .glow-hover:hover {
+            text-shadow: 0 0 8px #00D8FF, 0 0 16px #00D8FF;
+            transition: 0.3s;
+        }
+        .button-sleek {
+            padding: 0.6rem 1.2rem;
+            border-radius: 9999px;
+            font-semibold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .preview-media {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .form-container {
+            background-color: #1a2636;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(0, 216, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="bg-[#001f3f] px-6 py-4 flex justify-between items-center sticky top-0 z-50 shadow-lg">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl font-bold glow-hover">BluShell</span>
+        </div>
+        <ul class="flex gap-6 font-medium text-lg">
+            <li class="glow-hover cursor-pointer"><a href="index.html">Home</a></li>
+            <li class="glow-hover cursor-pointer"><a href="about.html">About Us</a></li>
+            <li class="glow-hover cursor-pointer"><a href="login.html">Register/Login</a></li>
+            <li class="glow-hover cursor-pointer"><a href="create_post.html">Create Post</a></li>
+            <li class="glow-hover cursor-pointer"><a href="index.html">Sign Out</a></li>
+        </ul>
+    </nav>
+
+    <!-- Polished Create Post Form -->
+    <section class="flex-grow flex items-center justify-center px-4 mt-10">
+        <div class="form-container w-full max-w-2xl">
+            <h2 class="text-3xl font-bold text-center mb-6 glow-hover">Create New Hazard Report</h2>
+            <form id="hazardForm" class="flex flex-col gap-6">
+
+                <!-- Media Upload -->
+                <label class="font-medium text-lg">Upload Image or Video</label>
+                <input type="file" accept="image/*,video/*" id="mediaInput" required
+                    class="p-3 rounded bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#00D8FF]" />
+
+                <div id="mediaPreviewContainer" class="flex justify-center items-center"></div>
+
+                <!-- Caption Input -->
+                <label class="font-medium text-lg">Caption / Description</label>
+                <textarea id="caption" placeholder="Write a short description about the hazard..."
+                    required class="p-3 rounded bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#00D8FF]" rows="5"></textarea>
+
+                <!-- Date & Time (Auto-filled) -->
+                <label class="font-medium text-lg">Date & Time</label>
+                <input type="text" id="currentDateTime" readonly
+                    class="p-3 rounded bg-gray-700 text-gray-300" />
+
+                <!-- Real-time Location -->
+                <label class="font-medium text-lg">Your Current Location</label>
+                <div class="flex gap-4">
+                    <input type="text" id="latitude" readonly placeholder="Latitude"
+                        class="p-3 rounded bg-gray-700 text-gray-300 flex-grow" />
+                    <input type="text" id="longitude" readonly placeholder="Longitude"
+                        class="p-3 rounded bg-gray-700 text-gray-300 flex-grow" />
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-between gap-4">
+                    <button type="submit"
+                        class="button-sleek bg-[#00D8FF] text-black font-semibold hover:scale-105 transition w-full">Submit</button>
+                    <button type="button"
+                        class="button-sleek bg-gray-600 text-white hover:scale-105 transition w-full">Edit</button>
+                    <button type="button"
+                        class="button-sleek bg-red-500 text-white hover:scale-105 transition w-full">Delete</button>
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#001f3f] text-white text-center py-4 mt-10">
+        &copy; 2025 BluShell. All rights reserved.
+    </footer>
+
+    <script>
+        document.getElementById('currentDateTime').value = new Date().toLocaleString();
+
+        // Get real-time location
+        window.onload = function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    document.getElementById('latitude').value = position.coords.latitude.toFixed(6);
+                    document.getElementById('longitude').value = position.coords.longitude.toFixed(6);
+                }, function (error) {
+                    console.warn('Geolocation error:', error);
+                    document.getElementById('latitude').value = 'Unavailable';
+                    document.getElementById('longitude').value = 'Unavailable';
+                });
+            } else {
+                alert('Geolocation is not supported by your browser.');
+            }
+        };
+
+        document.getElementById('mediaInput').addEventListener('change', function (event) {
+            const previewContainer = document.getElementById('mediaPreviewContainer');
+            previewContainer.innerHTML = '';
+
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const type = file.type.startsWith('image') ? 'image' : 'video';
+            const mediaElement = document.createElement(type);
+            mediaElement.src = URL.createObjectURL(file);
+            mediaElement.controls = true;
+            mediaElement.className = 'preview-media';
+
+            previewContainer.appendChild(mediaElement);
+        });
+
+        document.getElementById('hazardForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const mediaFile = document.getElementById('mediaInput').files[0];
+            const caption = document.getElementById('caption').value;
+            const datetime = document.getElementById('currentDateTime').value;
+            const latitude = document.getElementById('latitude').value;
+            const longitude = document.getElementById('longitude').value;
+
+            if (!mediaFile) {
+                alert('Please upload an image or video.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function () {
+                const mediaData = reader.result;
+                const post = { mediaData, caption, datetime, latitude, longitude };
+
+                let myPosts = JSON.parse(localStorage.getItem('myPosts')) || [];
+                myPosts.push(post);
+                localStorage.setItem('myPosts', JSON.stringify(myPosts));
+
+                alert('Hazard report submitted successfully!');
+                document.getElementById('hazardForm').reset();
+                document.getElementById('mediaPreviewContainer').innerHTML = '';
+                document.getElementById('currentDateTime').value = new Date().toLocaleString();
+            };
+
+            reader.readAsDataURL(mediaFile);
+        });
+    </script>
+
+</body>
+
+</html>
