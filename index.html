@@ -17,7 +17,7 @@
             background: #F8F9FA;
             color: #212529;
         }
-
+        
         nav {
             background-color: #256D85;
             color: #FFFFFF;
@@ -26,21 +26,21 @@
             top: 0;
             z-index: 2000;
         }
-
+        
         nav .nav-title {
             font-size: 1.3rem;
         }
-
+        
         nav ul li a {
             font-size: 0.99rem;
             color: #E0F7FA;
             transition: none;
         }
-
+        
         nav ul li a:hover {
             color: #00B4D8;
         }
-
+        
         .map-container {
             height: 500px;
             width: 100%;
@@ -50,7 +50,7 @@
             box-shadow: 0 0 20px rgba(0, 180, 216, 0.3);
             position: relative;
         }
-
+        
         .scroll-container {
             display: flex;
             overflow-x: auto;
@@ -59,16 +59,16 @@
             padding: 0.25rem 0;
             scroll-behavior: smooth;
         }
-
+        
         .scroll-container::-webkit-scrollbar {
             height: 6px;
         }
-
+        
         .scroll-container::-webkit-scrollbar-thumb {
             background-color: #00B4D8;
             border-radius: 3px;
         }
-
+        
         .card {
             min-width: 230px;
             background: #FFFFFF;
@@ -84,12 +84,12 @@
             margin-bottom: 0.25rem;
             box-shadow: 0 2px 8px rgba(0, 180, 216, 0.20);
         }
-
+        
         .card:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 180, 216, 0.30);
         }
-
+        
         .card img,
         .card video {
             width: 100%;
@@ -98,18 +98,18 @@
             border-radius: 8px;
             background: #e0e0e0;
         }
-
+        
         .card-caption {
             margin-top: 0.3rem;
         }
-
+        
         .card-caption p:first-child {
             font-size: 1rem;
             font-weight: 600;
             margin: 0;
             color: #212529;
         }
-
+        
         .button-sleek {
             padding: 0.4rem 0.8rem;
             border-radius: 9999px;
@@ -118,37 +118,37 @@
             cursor: pointer;
             font-size: 0.85rem;
         }
-
+        
         .button-edit {
             background: linear-gradient(90deg, #00B4D8, #256D85);
             color: white;
         }
-
+        
         .button-edit:hover {
             background: linear-gradient(90deg, #256D85, #00B4D8);
         }
-
+        
         .button-delete {
             background: linear-gradient(90deg, #E63946, #B00020);
             color: white;
         }
-
+        
         .button-delete:hover {
             background: linear-gradient(90deg, #B00020, #E63946);
         }
-
+        
         .custom-marker {
             font-size: 28px;
             transform: translateY(-8px);
         }
-
+        
         h2 {
             font-size: 1.75rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
             color: #212529;
         }
-
+        
         .leaflet-popup-content-wrapper {
             background: rgba(255, 255, 255, 0.95);
             color: #212529;
@@ -166,7 +166,7 @@
     <!-- Navbar -->
     <nav class="flex justify-between items-center shadow-lg">
         <div class="flex items-center gap-3">
-            <img src="images/logo.png" alt="BluShell Logo" class="h-10 w-auto"/>
+            <img src="images/logo.png" alt="BluShell Logo" class="h-10 w-auto" />
             <span class="nav-title font-bold">BluShell</span>
         </div>
         <ul class="flex gap-4 font-medium">
@@ -177,6 +177,16 @@
             <li><a href="index.html">Sign Out</a></li>
         </ul>
     </nav>
+
+    <!-- Hero Title Section -->
+    <section class="text-center mt-10 px-6">
+        <h1 class="text-4xl md:text-5xl font-bold text-[#256D85]">
+            Ocean Hazard Reporting System
+        </h1>
+        <p class="mt-3 text-lg text-gray-700">
+            Real-time crowdsourced monitoring for coastal safety
+        </p>
+    </section>
 
     <!-- Map -->
     <section class="px-6 mt-3">
@@ -206,60 +216,73 @@
         <div class="scroll-container" id="socialMediaPosts"></div>
     </section>
 
- 
-<!-- Footer -->
-<footer class="bg-[#22677a] text-white py-6">
-    <div class="container mx-auto px-10 max-w-7xl">
-        <div class="grid grid-cols-4 gap-6 text-left">
+    <!-- Add some margin before footer (so Social Media Posts and footer have gap) -->
+    <div class="mt-10"></div>
 
-            <!-- BluShell Info -->
-            <div class="flex flex-col items-start justify-center">
-                <h3 class="text-lg font-semibold mb-5">BluShell</h3>
-                <p class="text-sm leading-snug">Crowdsourced ocean hazard reporting platform for coastal safety and disaster management.</p>
-                <p class="mt-5 text-xs leading-snug">Powered by INCOIS</p>
-            </div>
+    <!-- Add some margin before footer (so Social Media Posts and footer have gap) -->
+    <div class="mt-10"></div>
 
-            <!-- Quick Links -->
-            <div class="flex flex-col items-start justify-center">
-                <h3 class="text-lg font-semibold mb-1">Quick Links</h3>
-                <ul class="space-y-1 text-sm">
-                    <li><a href="#" class="hover:text-[#00B4D8] transition">Home</a></li>
-                    <li><a href="#" class="hover:text-[#00B4D8] transition">About Us</a></li>
-                    <li><a href="#" class="hover:text-[#00B4D8] transition">All Reports</a></li>
-                    <li><a href="#" class="hover:text-[#00B4D8] transition">Submit Report</a></li>
-                    <li><a href="#" class="hover:text-[#00B4D8] transition">Emergency Contacts</a></li>
-                    <li><a href="#" class="hover:text-[#00B4D8] transition">FAQ</a></li>
-                </ul>
-            </div>
+    <!-- Footer -->
+    <footer class="bg-[#22677a] text-white py-6">
+        <div class="container mx-auto px-10 max-w-7xl">
+            <div class="grid grid-cols-4 gap-6 text-left items-start">
 
-            <!-- Contact Info -->
-            <div class="flex flex-col items-start justify-center">
-                <h3 class="text-lg font-semibold mb-1">Contact Info</h3>
-                <p class="text-sm leading-snug">info@blushell.com</p>
-                <p class="text-sm leading-snug">+91 12345 67890</p>
-                <p class="text-sm leading-snug">INCOIS, Pragathi Nagar, Hyderabad - 500090</p>
-            </div>
-
-            <!-- Emergency Helpline -->
-            <div class="flex justify-center items-center">
-                <div class="bg-[#195864] p-3 rounded-lg text-center w-full">
-                    <p class="font-semibold text-lg mb-1">Emergency Helpline</p>
-                    <p class="text-2xl font-bold mb-1">1093</p>
-                    <p class="text-sm">24/7 Disaster Management</p>
+                <!-- BluShell Info -->
+                <div class="flex flex-col items-start justify-center">
+                    <h3 class="text-lg font-semibold mb-5">BluShell</h3>
+                    <p class="text-sm leading-snug">Crowdsourced ocean hazard reporting platform for coastal safety and disaster management.</p>
+                    <p class="mt-5 text-xs leading-snug">Powered by INCOIS</p>
                 </div>
+
+                <!-- Quick Links -->
+                <div class="flex flex-col items-start justify-center">
+                    <h3 class="text-lg font-semibold mb-1">Quick Links</h3>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#" class="hover:text-[#00B4D8] transition">Home</a></li>
+                        <li><a href="#" class="hover:text-[#00B4D8] transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-[#00B4D8] transition">All Reports</a></li>
+                        <li><a href="#" class="hover:text-[#00B4D8] transition">Submit Report</a></li>
+                        <li><a href="#" class="hover:text-[#00B4D8] transition">Emergency Contacts</a></li>
+                        <li><a href="#" class="hover:text-[#00B4D8] transition">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="flex flex-col items-start justify-center">
+                    <h3 class="text-lg font-semibold mb-1">Contact Info</h3>
+                    <p class="text-sm leading-snug">info@blushell.com</p>
+                    <p class="text-sm leading-snug">+91 12345 67890</p>
+                    <p class="text-sm leading-snug">INCOIS, Pragathi Nagar, Hyderabad - 500090</p>
+                </div>
+
+                <!-- Emergency Helpline -->
+                <div class="flex justify-center self-center">
+                    <div class="bg-[#195864] p-3 rounded-lg text-center w-full">
+                        <p class="font-semibold text-lg mb-1">Emergency Helpline</p>
+                        <p class="text-2xl font-bold mb-1">1093</p>
+                        <p class="text-sm">24/7 Disaster Management</p>
+                    </div>
+                </div>
+
             </div>
 
+            <!-- Bottom Bar -->
+            <div class="border-t border-gray-400 mt-4 pt-2 text-center text-xs leading-tight">
+                <p class="mb-1">© 2025 BluShell. All rights reserved. | Privacy Policy | Terms of Service | Data Protection</p>
+                <p>Made with <span class="text-red-500">❤</span> for coastal safety</p>
+            </div>
         </div>
-
-        <!-- Bottom Bar -->
-        <div class="border-t border-gray-400 mt-4 pt-2 text-center text-xs leading-tight">
-            <p class="mb-1">© 2025 BluShell. All rights reserved. | Privacy Policy | Terms of Service | Data Protection</p>
-            <p>Made with <span class="text-red-500">❤</span> for coastal safety</p>
-        </div>
-    </div>
-</footer>
+    </footer>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
     <script>
@@ -272,33 +295,129 @@
         const loggedInUser = 'Sanjana Prasad';
 
         const severityLevels = {
-            1: { color: '#2ECC71', name: 'Low' },
-            2: { color: '#FFC107', name: 'Moderate' },
-            3: { color: '#E63946', name: 'High' },
-            4: { color: '#6A4C93', name: 'Severe' }
+            1: {
+                color: '#2ECC71',
+                name: 'Low'
+            },
+            2: {
+                color: '#FFC107',
+                name: 'Moderate'
+            },
+            3: {
+                color: '#E63946',
+                name: 'High'
+            },
+            4: {
+                color: '#6A4C93',
+                name: 'Severe'
+            }
         };
 
         const hazardTypes = {
-            flooding: { icon: 'fa-water', name: 'Coastal Flooding', image: 'images/flooding.jpg' },
-            erosion: { icon: 'fa-hill-rockslide', name: 'Beach Erosion', image: 'images/erosion.jpg' },
-            cyclone: { icon: 'fa-wind', name: 'Cyclone Damage', image: 'images/cyclone.jpg' },
-            pollution: { icon: 'fa-trash', name: 'Pollution', image: 'images/pollution.jpg' },
-            boat: { icon: 'fa-trash', name: 'Boat', image: 'images/boat.jpg' },
-            Tsunami: { icon: 'fa-tree', name: 'Tsunami', image: 'images/tsunami.jpg' },
-            high_tide: { icon: 'fa-trash', name: 'High Tide', image: 'images/high.jpg' },
-            currents: { icon: 'fa-trash', name: 'High ocean currents', image: 'images/currents.jpg' },
-            other: { icon: 'fa-triangle-exclamation', name: 'Other Hazard', image: 'images/other.jpg' }
+            flooding: {
+                icon: 'fa-water',
+                name: 'Coastal Flooding',
+                image: 'images/flooding.jpg'
+            },
+            erosion: {
+                icon: 'fa-hill-rockslide',
+                name: 'Beach Erosion',
+                image: 'images/erosion.jpg'
+            },
+            cyclone: {
+                icon: 'fa-wind',
+                name: 'Cyclone Damage',
+                image: 'images/cyclone.jpg'
+            },
+            pollution: {
+                icon: 'fa-trash',
+                name: 'Pollution',
+                image: 'images/pollution.jpg'
+            },
+            boat: {
+                icon: 'fa-trash',
+                name: 'Boat',
+                image: 'images/boat.jpg'
+            },
+            Tsunami: {
+                icon: 'fa-tree',
+                name: 'Tsunami',
+                image: 'images/tsunami.jpg'
+            },
+            high_tide: {
+                icon: 'fa-trash',
+                name: 'High Tide',
+                image: 'images/high.jpg'
+            },
+            currents: {
+                icon: 'fa-trash',
+                name: 'High ocean currents',
+                image: 'images/currents.jpg'
+            },
+            other: {
+                icon: 'fa-triangle-exclamation',
+                name: 'Other Hazard',
+                image: 'images/other.jpg'
+            }
         };
 
-        const reports = [
-            { lat: 19.0760, lng: 72.8777, severity: 3, type: 'erosion', desc: 'Mumbai coast erosion', user: 'Sanjana Prasad', media: [] },
-            { lat: 13.0827, lng: 80.2707, severity: 4, type: 'pollution', desc: 'Plastic Pollution', user: 'Ishanya Tripathi', media: [] },
-            { lat: 17.686815, lng: 83.218483, severity: 4, type: 'boat', desc: 'Boat Accident', user: 'Mihir Sahu', media: [] },
-            { lat: 22.5726, lng: 88.3639, severity: 2, type: 'flooding', desc: 'Kolkata flooding', user: 'Sanjana Prasad', media: [] },
-            { lat: 15.2993, lng: 74.1240, severity: 1, type: 'Tsunami', desc: 'Tsunami', user: 'Naman Sinha', media: [] },
-            { lat: 20.905886, lng: 70.387505, severity: 1, type: 'high_tide', desc: 'High Tides', user: 'Amit Gupta', media: [] },
-            { lat: 11.127123, lng: 78.656891, severity: 1, type: 'currents', desc: 'High ocean currents', user: 'Aarya Nighut', media: [] }
-        ];
+        const reports = [{
+            lat: 19.0760,
+            lng: 72.8777,
+            severity: 3,
+            type: 'erosion',
+            desc: 'Mumbai coast erosion',
+            user: 'Sanjana Prasad',
+            media: []
+        }, {
+            lat: 13.0827,
+            lng: 80.2707,
+            severity: 4,
+            type: 'pollution',
+            desc: 'Plastic Pollution',
+            user: 'Ishanya Tripathi',
+            media: []
+        }, {
+            lat: 17.686815,
+            lng: 83.218483,
+            severity: 4,
+            type: 'boat',
+            desc: 'Boat Accident',
+            user: 'Mihir Sahu',
+            media: []
+        }, {
+            lat: 22.5726,
+            lng: 88.3639,
+            severity: 2,
+            type: 'flooding',
+            desc: 'Kolkata flooding',
+            user: 'Sanjana Prasad',
+            media: []
+        }, {
+            lat: 15.2993,
+            lng: 74.1240,
+            severity: 1,
+            type: 'Tsunami',
+            desc: 'Tsunami',
+            user: 'Naman Sinha',
+            media: []
+        }, {
+            lat: 20.905886,
+            lng: 70.387505,
+            severity: 1,
+            type: 'high_tide',
+            desc: 'High Tides',
+            user: 'Amit Gupta',
+            media: []
+        }, {
+            lat: 11.127123,
+            lng: 78.656891,
+            severity: 1,
+            type: 'currents',
+            desc: 'High ocean currents',
+            user: 'Aarya Nighut',
+            media: []
+        }];
 
         reports.forEach(r => {
             const sev = severityLevels[r.severity];
@@ -346,11 +465,31 @@
             card.addEventListener('mouseleave', () => marker.closePopup());
         });
 
-        const socialMediaData = [
-            { platform: 'Instagram', caption: 'Oil Spill', type: 'social', lat: 16.440588, lng: 73.340281, user: 'coastlover123', media: 'images/social1.jpg' },
-            { platform: 'Twitter', caption: 'Algae', type: 'social', lat: 10.03442, lng: 76.05398, user: 'eco_warrior', media: 'images/social2.jpg' },
-            { platform: 'Facebook', caption: 'Marine Debris', type: 'social', lat: 18.52293, lng: 84.36001, user: 'localreporter', media: 'images/social3.jpg' }
-        ];
+        const socialMediaData = [{
+            platform: 'Instagram',
+            caption: 'Oil Spill',
+            type: 'social',
+            lat: 16.440588,
+            lng: 73.340281,
+            user: 'coastlover123',
+            media: 'images/social1.jpg'
+        }, {
+            platform: 'Twitter',
+            caption: 'Algae',
+            type: 'social',
+            lat: 10.03442,
+            lng: 76.05398,
+            user: 'eco_warrior',
+            media: 'images/social2.jpg'
+        }, {
+            platform: 'Facebook',
+            caption: 'Marine Debris',
+            type: 'social',
+            lat: 18.52293,
+            lng: 84.36001,
+            user: 'localreporter',
+            media: 'images/social3.jpg'
+        }];
 
         socialMediaData.forEach(post => {
             const card = document.createElement('div');
@@ -378,4 +517,5 @@
     </script>
 
 </body>
+
 </html>
